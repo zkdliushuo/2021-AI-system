@@ -177,12 +177,14 @@ def main():
 
     model = Net().to(device)
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
-
+    
     # show model graph
+    images = images.to(device)
     writer.add_graph(model, images)
 
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
 
+    
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
